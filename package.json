@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "dependencies": {
     "debug": "~2.6.8",
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "babel-eslint": "7.1.1",
-    "eslint": "3.18.0"
+    "eslint": "3.18.0",
+    "nodemon": "^1.18.6"
   }
 }
