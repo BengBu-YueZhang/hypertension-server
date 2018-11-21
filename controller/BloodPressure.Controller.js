@@ -38,10 +38,15 @@ module.exports = {
   async getDayBloodPressureNote (ctx, next) {
     try {
       let { start, end } = ctx.request.query
+      // 默认为7天内的数据
+      start = start || moment().subtract('days', 7).hour(0).minute(0).second(0).millisecond(0).toDate().getTime()
+      end = end || moment().hour(23).minute(59).second(59).millisecond(999).toDate().getTime()
+      start = parseInt(start, 10)
+      end = parseInt(end, 10)
       if (!R.is(Number, start)) ctx.throw(400, new Error('开始时间必须是数字类型'))
       if (!R.is(Number, end)) ctx.throw(400, new Error('结束时间必须是数字类型'))
-      start = moment(new Date(parseInt(start, 10))).toDate()
-      end = moment(new Date(parentInt(end, 10))).toDate()
+      start = moment(new Date(start)).toDate()
+      end = moment(new Date(end)).toDate()
       // 聚合管道
       let result = await BloodPressureModel.aggregate([
         {
@@ -54,11 +59,8 @@ module.exports = {
         },
         {
           $project: {
-            _id: 0
-          }
-        },
-        {
-          $project: {
+            h: 1,
+            l: 1,
             formatcreateAt: {
               $dateToString: {
                 format: "%Y-%m-%d",
@@ -102,6 +104,7 @@ module.exports = {
   async getHourBloodPressureNote (ctx, next) {
     try {
       let { day } = ctx.request.query
+      day = day || moment().format('YYYY-MM-DD')
       if (!R.is(String, day)) ctx.throw(400, new Error('时间是字符串类型'))
       let start = moment(day).hour(0).minute(0).second(0).millisecond(0).toDate()
       let end = moment(day).hour(23).minute(59).second(59).millisecond(999).toDate()
@@ -116,11 +119,8 @@ module.exports = {
         },
         {
           $project: {
-            _id: 0
-          }
-        },
-        {
-          $project: {
+            h: 1,
+            l: 1,
             formatcreateAt: {
               $dateToString: {
                 format: "%H",
@@ -143,6 +143,7 @@ module.exports = {
           }
         }
       ])
+      console.log(result)
       ctx.result = {
         code: 200,
         data: {
