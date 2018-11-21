@@ -13,7 +13,9 @@ const debug = require('debug')('koa2:server')
 const path = require('path')
 
 const config = require('./config')
-const routes = require('./routes')
+const IndexRoute = require('./routes/index')
+const BpRoute = require('./routes/BloodPressure.Route')
+const BwRoute = require('./routes/BodyWeight.Route')
 
 const port = process.env.PORT || config.port
 
@@ -27,8 +29,9 @@ app.use(bodyparser())
   .use(json())
   .use(logger())
   .use(require('koa-static')(__dirname + '/public'))
-  .use(router.routes())
-  .use(router.allowedMethods())
+  .use(IndexRoute.routes(), IndexRoute.allowedMethods())
+  .use(BpRoute.routes(), BpRoute.allowedMethods())
+  .use(BwRoute.routes(), BwRoute.allowedMethods())
 
 app.use(async (ctx, next) => {
   const start = new Date()
@@ -37,7 +40,6 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - $ms`)
 })
 
-routes(router)
 app.on('error', function(err, ctx) {
   console.log(err)
   logger.error('server error', err, ctx)

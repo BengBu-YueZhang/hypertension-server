@@ -11,10 +11,10 @@ module.exports = {
   async addBloodPressureNote (ctx, next) {
     try {
       let { h, l } = ctx.request.body
-      if (!R.is(Number, h)) ctx.throw(400, new Error('高压必须是数字类型'))
-      if (!R.is(Number, l)) ctx.throw(400, new Error('低压必须是数字类型'))
       h = parseInt(h, 10)
       l = parseInt(l, 10)
+      if (!R.is(Number, h)) ctx.throw(400, new Error('高压必须是数字类型'))
+      if (!R.is(Number, l)) ctx.throw(400, new Error('低压必须是数字类型'))
       const bloodPressure = new BloodPressureModel({ h, l })
       await bloodPressure.save()
       ctx.result = {
