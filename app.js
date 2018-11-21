@@ -17,6 +17,10 @@ const routes = require('./routes')
 
 const port = process.env.PORT || config.port
 
+const mongo = require('./config/mongo')
+
+mongo.connect()
+
 onerror(app)
 
 app.use(bodyparser())
