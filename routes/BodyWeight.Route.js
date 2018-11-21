@@ -1,4 +1,4 @@
 module.exports =  (router) => {
-  router.post('/add_bw')
-  router.get('/day_bw_average')
+  router.post('/bw/add_bw')
+  router.get('/bw/day_bw_average')
 }

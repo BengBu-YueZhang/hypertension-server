@@ -32,6 +32,8 @@ module.exports = {
 
   /**
    * 获取时间范围内每日平均血压
+   * @param {Number} start 开始时间  
+   * @param {Number} end 结束时间
    */
   async getDayBloodPressureNote (ctx, next) {
     try {
@@ -95,13 +97,14 @@ module.exports = {
 
   /**
    * 获取某一天内每小时的平均血压
+   * @param {String} day 时间字符串 例如: '2018-01-01'
    */
   async getHourBloodPressureNote (ctx, next) {
     try {
       let { day } = ctx.request.query
       if (!R.is(String, day)) ctx.throw(400, new Error('时间是字符串类型'))
-      let start = moment(new Date(parseInt(day, 10))).hour(0).minute(0).second(0).millisecond(0).toDate()
-      let end = moment(new Date(parseInt(day, 10))).hour(23).minute(59).second(59).millisecond(999).toDate()
+      let start = moment(day).hour(0).minute(0).second(0).millisecond(0).toDate()
+      let end = moment(day).hour(23).minute(59).second(59).millisecond(999).toDate()
       let result = await BloodPressureModel.aggregate([
         {
           $match: {
