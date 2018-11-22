@@ -1,25 +1,19 @@
 const Koa = require('koa')
 const Router = require('koa-router')
 const app = new Koa()
-const router = new Router()
 
-const co = require('co')
-const convert = require('koa-convert')
 const cors = require('@koa/cors')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-const debug = require('debug')('koa2:server')
-const path = require('path')
+const result = require('./middleware/result')
 
 const config = require('./config')
 const IndexRoute = require('./routes/Index.Route')
 const BpRoute = require('./routes/BloodPressure.Route')
 const BwRoute = require('./routes/BodyWeight.Route')
 const UserRoute = require('./routes/User.Route')
-
-const port = process.env.PORT || config.port
 
 const mongo = require('./config/mongo')
 const redis = require('./config/redis')
@@ -50,6 +44,7 @@ app
   .use(BpRoute.routes(), BpRoute.allowedMethods())
   .use(BwRoute.routes(), BwRoute.allowedMethods())
   .use(UserRoute.routes(), UserRoute.allowedMethods())
+  .use(result())
 
 app.use(async (ctx, next) => {
   const start = new Date()
