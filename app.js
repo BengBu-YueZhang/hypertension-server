@@ -5,6 +5,7 @@ const router = new Router()
 
 const co = require('co')
 const convert = require('koa-convert')
+const cors = require('@koa/cors')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
@@ -21,12 +22,27 @@ const UserRoute = require('./routes/User.Route')
 const port = process.env.PORT || config.port
 
 const mongo = require('./config/mongo')
+const redis = require('./config/redis')
 
 mongo.connect()
 
 onerror(app)
 
-app.use(bodyparser())
+app
+  .use(cors({
+    origin: '*',
+    credentials: true,
+    methods: ['PUT', 'POST', 'GET', 'DELETE', 'OPTIONS'],
+    allowedHeaders: [
+      'Content-Type',
+      'Content-Length',
+      'Authorization',
+      'Accept',
+      'X-Requested-With',
+      'x-access-token'
+    ]
+  }))
+  .use(bodyparser())
   .use(json())
   .use(logger())
   .use(require('koa-static')(__dirname + '/public'))
