@@ -33,7 +33,7 @@ app.use(bodyparser())
   .use(IndexRoute.routes(), IndexRoute.allowedMethods())
   .use(BpRoute.routes(), BpRoute.allowedMethods())
   .use(BwRoute.routes(), BwRoute.allowedMethods())
-  .use(UserRoute.router(), UserRoute.allowedMethods())
+  .use(UserRoute.routes(), UserRoute.allowedMethods())
 
 app.use(async (ctx, next) => {
   const start = new Date()

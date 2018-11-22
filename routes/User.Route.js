@@ -5,4 +5,4 @@ const UserController = require('../controller/User.Controller')
 router.post('/', UserController.addUser)
 router.get('/have', UserController.isHaveUser)
 
-export default router
+module.exports = router
