@@ -143,7 +143,6 @@ module.exports = {
           }
         }
       ])
-      console.log(result)
       ctx.result = {
         code: 200,
         data: {

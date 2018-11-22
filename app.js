@@ -13,9 +13,10 @@ const debug = require('debug')('koa2:server')
 const path = require('path')
 
 const config = require('./config')
-const IndexRoute = require('./routes/index')
+const IndexRoute = require('./routes/Index.Route')
 const BpRoute = require('./routes/BloodPressure.Route')
 const BwRoute = require('./routes/BodyWeight.Route')
+const UserRoute = require('./routes/User.Route')
 
 const port = process.env.PORT || config.port
 
@@ -32,6 +33,7 @@ app.use(bodyparser())
   .use(IndexRoute.routes(), IndexRoute.allowedMethods())
   .use(BpRoute.routes(), BpRoute.allowedMethods())
   .use(BwRoute.routes(), BwRoute.allowedMethods())
+  .use(UserRoute.router(), UserRoute.allowedMethods())
 
 app.use(async (ctx, next) => {
   const start = new Date()
