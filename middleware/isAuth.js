@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const secret = require('../config/jwt').secret
+const secret = require('../util/jwt').secret
 const redisClient = require('../config/redis')
 const { promisify } = require('util')
 const getAsync = promisify(redisClient.get).bind(redisClient)
