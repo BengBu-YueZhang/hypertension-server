@@ -9,6 +9,7 @@
     "@koa/cors": "^2.2.2",
     "bcryptjs": "^2.4.3",
     "debug": "~2.6.8",
+    "jsonwebtoken": "^8.4.0",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-convert": "^1.2.0",
