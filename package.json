@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "HOST=47.91.246.74  nodemon app.js",
+    "line": "HOST=127.0.0.1  nodemon app.js"
   },
   "dependencies": {
     "@koa/cors": "^2.2.2",
