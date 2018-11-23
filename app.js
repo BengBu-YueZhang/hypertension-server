@@ -18,6 +18,8 @@ const UserRoute = require('./routes/User.Route')
 const mongo = require('./config/mongo')
 const redis = require('./config/redis')
 
+const PORT = process.env.PORT
+
 mongo.connect()
 
 onerror(app)
@@ -58,6 +60,6 @@ app.on('error', function(err, ctx) {
   logger.error('server error', err, ctx)
 })
 
-module.exports = app.listen(config.port, () => {
-  console.log(`Listening on http://localhost:${config.port}`)
+module.exports = app.listen(PORT, () => {
+  console.log(`Listening on http://127.0.0.1:${PORT}`)
 })
